@@ -33,7 +33,7 @@ namespace ModbusLibrary
         // Database Nesnesi
         DatabaseManager db = new DatabaseManager();
 
-        // 🔥 YENİ: OTURUM KİMLİĞİ DEĞİŞKENİ BURADA
+        //  OTURUM KİMLİĞİ DEĞİŞKENİ BURADA
         public string aktifOturum = "";
 
         public DozajDashboard()
@@ -83,7 +83,7 @@ namespace ModbusLibrary
                             {
                                 lstLogs.Items.Insert(0, $"[{DateTime.Now:HH:mm:ss}] !!! BAĞLANTI KOPTU !!!");
 
-                                // 🔥 KOPMA DURUMUNDA AKTİF OTURUM KİMLİĞİYLE KAYIT ATILIR
+                                //  KOPMA DURUMUNDA AKTİF OTURUM KİMLİĞİYLE KAYIT ATILIR
                                 db.OlayKaydet("Haberleşme zaman aşımı: 100 ardışık hata oluştu.", "ALARM", aktifOturum);
 
                                 ArayuzuSifirla();
@@ -95,7 +95,7 @@ namespace ModbusLibrary
             }
         }
 
-        // 🔥 YENİ 1: Nokta/Virgül hatalarını çözen evrensel dönüştürücü
+        //  Nokta/Virgül hatalarını çözen evrensel dönüştürücü
         private double ParseDoubleSafe(string val)
         {
             if (string.IsNullOrWhiteSpace(val)) return 0;
@@ -104,7 +104,7 @@ namespace ModbusLibrary
             return result;
         }
 
-        // 🔥 YENİ 2: UI Titremesini (Flicker) ve İşlemci Yükünü Önleyen Yardımcı Metotlar
+        //  UI Titremesini (Flicker) ve İşlemci Yükünü Önleyen Yardımcı Metotlar
         private void SetText(Label lbl, string text)
         {
             if (lbl.Text != text) lbl.Text = text;
@@ -303,10 +303,10 @@ namespace ModbusLibrary
                 await Task.Delay(250);
                 if (serial != null) serial.Close();
 
-                // 🔥 MANUEL KESİNTİDE OTURUM KAYDI ATILIR
+                //  MANUEL KESİNTİDE OTURUM KAYDI ATILIR
                 db.OlayKaydet("Kullanıcı bağlantıyı manuel olarak kesti.", "BILGI", aktifOturum);
 
-                // 🔥 OTURUM KİMLİĞİ SIFIRLANIR
+                //  OTURUM KİMLİĞİ SIFIRLANIR
                 aktifOturum = "";
 
                 ArayuzuSifirla();
@@ -328,7 +328,7 @@ namespace ModbusLibrary
                     isHaberlesmeActive = true;
                     consecutiveErrorCount = 0;
 
-                    // 🔥 YENİ OTURUM KİMLİĞİ OLUŞTURULUR
+                    //  YENİ OTURUM KİMLİĞİ OLUŞTURULUR
                     aktifOturum = "RUN-" + DateTime.Now.ToString("yyyyMMdd-HHmmss");
 
                     btnConnect.Text = "Bağlantıyı Kes";
@@ -369,7 +369,7 @@ namespace ModbusLibrary
 
         // --- KOMUT 2 BUTONLARI (Register 32) ---
 
-        // 🔥 YENİ MANTIK: Yaylı (Pulse) Buton - Toplayıcı Sıfırla
+        //   Yaylı (Pulse) Buton - Toplayıcı Sıfırla
         private async void btnTotalSifirla_Click(object sender, EventArgs e)
         {
             // 1. İlgili biti SET et (1 yap)
@@ -384,7 +384,7 @@ namespace ModbusLibrary
             await GuvenliYaz(32, gonderilecekKomut32);
         }
 
-        // 🔥 YENİ MANTIK: Yaylı (Pulse) Buton - Arıza Sil
+        //  Yaylı (Pulse) Buton - Arıza Sil
         private async void btnArizaSil_Click(object sender, EventArgs e)
         {
             // 1. İlgili biti SET et (1 yap)
@@ -419,7 +419,7 @@ namespace ModbusLibrary
                         {
                             string eskiDeger = lblSetDegeri.Text;
                             await GuvenliYaz(30, v30);
-                            // 🔥 AYARLAR KAYDEDİLİRKEN AKTİF OTURUM GÖNDERİLİR
+                            // AYARLAR KAYDEDİLİRKEN AKTİF OTURUM GÖNDERİLİR
                             db.AyarKaydet("Hedef Dozaj", eskiDeger, v30.ToString(), aktifOturum);
                         }
 
@@ -450,14 +450,14 @@ namespace ModbusLibrary
                 }
 
 
-        // 🔥 YENİ: Rapor formunu açan buton tıklama olayı
+        //  Rapor formunu açan buton tıklama olayı
         private void btnRaporlar_Click(object sender, EventArgs e)
         {
             // Yeni oluşturduğumuz formu, o anki aktif oturum ID'si ile başlatıyoruz
             RaporForm raporEkrani = new RaporForm(aktifOturum);
 
             // ShowDialog ile açarsak, kullanıcı bu pencereyi kapatana kadar 
-            // arkadaki ana forma müdahale edemez. Bu rapor ekranları için en idealidir.
+            
             raporEkrani.ShowDialog();
         }
 
@@ -744,7 +744,7 @@ namespace ModbusLibrary
 //        // Database Nesnesi
 //        DatabaseManager db = new DatabaseManager();
 
-//        // 🔥 YENİ: OTURUM KİMLİĞİ DEĞİŞKENİ BURADA
+//        //: OTURUM KİMLİĞİ DEĞİŞKENİ BURADA
 //        public string aktifOturum = "";
 
 //        public DozajDashboard()
@@ -794,7 +794,7 @@ namespace ModbusLibrary
 //                            {
 //                                lstLogs.Items.Insert(0, $"[{DateTime.Now:HH:mm:ss}] !!! BAĞLANTI KOPTU !!!");
 
-//                                // 🔥 KOPMA DURUMUNDA AKTİF OTURUM KİMLİĞİYLE KAYIT ATILIR
+//                                //  KOPMA DURUMUNDA AKTİF OTURUM KİMLİĞİYLE KAYIT ATILIR
 //                                db.OlayKaydet("Haberleşme zaman aşımı: 100 ardışık hata oluştu.", "ALARM", aktifOturum);
 
 //                                ArayuzuSifirla();
@@ -823,7 +823,7 @@ namespace ModbusLibrary
 //                int k31 = komutVerisi31;
 //                int k32 = gonderilecekKomut32;
 
-//                // 🔥 PERİYODİK VERİ KAYDINDA AKTİF OTURUM GÖNDERİLİR
+//                //  PERİYODİK VERİ KAYDINDA AKTİF OTURUM GÖNDERİLİR
 //                db.VeriKaydet(debi, agirlik, hiz, t1, t2, bunker, k31, k32, eskiInV, eskiInO, eskiInS, aktifOturum);
 //            }
 //            catch { }
@@ -994,10 +994,10 @@ namespace ModbusLibrary
 //                await Task.Delay(250);
 //                if (serial != null) serial.Close();
 
-//                // 🔥 MANUEL KESİNTİDE OTURUM KAYDI ATILIR
+//                //  MANUEL KESİNTİDE OTURUM KAYDI ATILIR
 //                db.OlayKaydet("Kullanıcı bağlantıyı manuel olarak kesti.", "BILGI", aktifOturum);
 
-//                // 🔥 OTURUM KİMLİĞİ SIFIRLANIR
+//                //  OTURUM KİMLİĞİ SIFIRLANIR
 //                aktifOturum = "";
 
 //                ArayuzuSifirla();
@@ -1019,7 +1019,7 @@ namespace ModbusLibrary
 //                    isHaberlesmeActive = true;
 //                    consecutiveErrorCount = 0;
 
-//                    // 🔥 YENİ OTURUM KİMLİĞİ OLUŞTURULUR
+//                    //  YENİ OTURUM KİMLİĞİ OLUŞTURULUR
 //                    aktifOturum = "RUN-" + DateTime.Now.ToString("yyyyMMdd-HHmmss");
 
 //                    btnConnect.Text = "Bağlantıyı Kes";
@@ -1106,7 +1106,7 @@ namespace ModbusLibrary
 //                {
 //                    string eskiDeger = lblSetDegeri.Text;
 //                    await GuvenliYaz(30, v30);
-//                    // 🔥 AYARLAR KAYDEDİLİRKEN AKTİF OTURUM GÖNDERİLİR
+//                    //  AYARLAR KAYDEDİLİRKEN AKTİF OTURUM GÖNDERİLİR
 //                    db.AyarKaydet("Hedef Dozaj", eskiDeger, v30.ToString(), aktifOturum);
 //                }
 
@@ -1347,7 +1347,7 @@ namespace ModbusLibrary
 //            eskiInV = inV; eskiInO = inO; eskiInS = inS; eskiBnkrSt = bnkrSt;
 //        }
 
-//        // 🔥 YENİ: CheckAndLog METODU DA AKTİF OTURUM KİMLİĞİYLE KAYIT ATAR
+//        //  YENİ: CheckAndLog METODU DA AKTİF OTURUM KİMLİĞİYLE KAYIT ATAR
 //        private void CheckAndLog(ushort current, ushort old, ushort mask, string arizaAdi)
 //        {
 //            bool suAnHataVar = (current & mask) != 0;
