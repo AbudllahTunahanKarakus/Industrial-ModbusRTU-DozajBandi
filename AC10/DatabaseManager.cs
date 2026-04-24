@@ -11,8 +11,7 @@ namespace ModbusLibrary
 {
     public class DatabaseManager
     {
-        // 🔥 DİKKAT: SQL Server adın TUNA değilse burayı kendi sunucu adına göre değiştir!
-        // En yaygın örnekler: "localhost", ".\\SQLEXPRESS", "(localdb)\\MSSQLLocalDB"
+        
         private string serverName = "TUNA";
 
         private string dbName = "DozajDbWPF";
@@ -20,13 +19,13 @@ namespace ModbusLibrary
 
         public DatabaseManager()
         {
-            // 🔥 ÇÖZÜM: Trusted_Connection yanına 'TrustServerCertificate=True' eklendi!
+            // Trusted_Connection yanına 'TrustServerCertificate=True' eklendi!
             connectionString = $"Server={serverName};Database={dbName};Trusted_Connection=True;TrustServerCertificate=True;";
 
-            // 1. Önce Veritabanını oluştur (Yoksa yaratır)
+            
             VeritabaniniOlustur();
 
-            // 2. Sonra içine girip Tabloları kur
+            
             TablolariOlustur();
         }
 
@@ -35,7 +34,7 @@ namespace ModbusLibrary
         {
             try
             {
-                // 🔥 ÇÖZÜM: 'master' veritabanı bağlantısına da 'TrustServerCertificate=True' eklendi!
+                
                 string masterConnectionString = $"Server={serverName};Database=master;Trusted_Connection=True;TrustServerCertificate=True;";
 
                 using (SqlConnection conn = new SqlConnection(masterConnectionString))
@@ -53,7 +52,7 @@ namespace ModbusLibrary
                     }
                 }
 
-                // SQL Server'ın veritabanı MDF dosyalarını diske yazması için 1 saniye mola veriyoruz
+                // SQL Server'ın veritabanı MDF dosyalarını diske yazması için 1 saniye
                 Thread.Sleep(1000);
             }
             catch (Exception ex)
@@ -63,7 +62,7 @@ namespace ModbusLibrary
             }
         }
 
-        // --- TABLOLARI OLUŞTURMA (Eski sisteminle birebir aynı yapı) ---
+        // --- TABLOLARI OLUŞTURMA  ---
         private void TablolariOlustur()
         {
             try
@@ -123,7 +122,7 @@ namespace ModbusLibrary
             }
         }
 
-        // 🔥 "Ateşle ve Unut" mantığı ile arayüzü dondurmayan Olay Kaydı
+        // arayüzü dondurmayan Olay Kaydı
         public void OlayKaydet(string mesaj, string tip, string oturum = "")
         {
             Task.Run(() =>
@@ -147,7 +146,7 @@ namespace ModbusLibrary
             });
         }
 
-        // 🔥 "Ateşle ve Unut" mantığı ile arayüzü dondurmayan Periyodik Veri Kaydı
+        // arayüzü dondurmayan Periyodik Veri Kaydı
         public void VeriKaydet(double debi, double agirlik, double hiz, double t1, double t2, double bunker, int k31, int k32, int g14, int c15, int s16, string oturum = "")
         {
             Task.Run(() =>
@@ -182,7 +181,7 @@ namespace ModbusLibrary
             });
         }
 
-        // 🔥 "Ateşle ve Unut" mantığı ile arayüzü dondurmayan Ayar Kaydı
+        //  arayüzü dondurmayan Ayar Kaydı
         public void AyarKaydet(string param, string eski, string yeni, string oturum = "")
         {
             Task.Run(() =>
@@ -241,7 +240,7 @@ namespace ModbusLibrary
             return dt;
         }
 
-        // 🔥 YENİ: WPF Rapor Ekranı İçin Gelişmiş Filtreli Log Getirme Metodu
+        // WPF Rapor Ekranı İçin Gelişmiş Filtreli Log Getirme Metodu
         public DataTable GetirFiltreliLoglar(string zamanFiltresi, string aramaKelimesi, string aktifOturum)
         {
             DataTable dt = new DataTable();
