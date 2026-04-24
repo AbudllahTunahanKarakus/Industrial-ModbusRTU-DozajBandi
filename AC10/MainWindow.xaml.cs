@@ -30,7 +30,7 @@ namespace AC10
         ushort commandData31 = 0;
         ushort commandToSend32 = 0;
 
-        int currentDecimalPoint = 0; // 🔥 DÜZELTME 1: Noktanın yerini hesaplamalarda kullanmak için global değişken olarak ekledik
+        int currentDecimalPoint = 0; 
 
         ushort oldInV = 0, oldInO = 0, oldInS = 0, oldBnkrSt = 0;
         public string activeSession = "";
@@ -235,7 +235,7 @@ namespace AC10
 
             try
             {
-                // 🔥 Noktanın Yerini ve matematiksel böleni (10, 100 vb.) en başta hesaplıyoruz
+                
                 currentDecimalPoint = GetReg(17);
                 lblDecimalPoint.Text = currentDecimalPoint.ToString();
                 double bolen = Math.Pow(10, currentDecimalPoint);
@@ -308,7 +308,7 @@ namespace AC10
                 // 6. TEXTBOX VE BUTON SENKRONİZASYONU
                 if (!isWriting)
                 {
-                    // 🔥 Reg 30 (Hedef Dozaj) okunurken de bölen ile bölünerek ekrana yansıtılır (Örn: 125 gelirse 12.5 yazar)
+                    // Reg 30 (Hedef Dozaj) okunurken de bölen ile bölünerek ekrana yansıtılır (Örn: 125 gelirse 12.5 yazar)
                     if (!is30Changed && !txtTargetDose.IsFocused)
                         txtTargetDose.Text = (GetReg(30) / bolen).ToString("F" + currentDecimalPoint);
 
@@ -443,7 +443,7 @@ namespace AC10
         private async void btnRejectCalibration_Click(object sender, RoutedEventArgs e) { commandToSend32 ^= 64; await SafeWriteAsync(32, commandToSend32); }
         private async void btnStopFilling_Click(object sender, RoutedEventArgs e) { commandToSend32 ^= 128; await SafeWriteAsync(32, commandToSend32); }
 
-        // 🔥 YENİ: Sadece kullanıcının değiştirdiği değerleri gönderen akıllı Ayar Gönderme Metodu
+        //Sadece kullanıcının değiştirdiği değerleri gönderen akıllı Ayar Gönderme Metodu
         private async void btnSendSettings_Click(object sender, RoutedEventArgs e)
         {
             if (!isCommunicationActive) { MessageBox.Show("Önce cihaza bağlanın!", "Uyarı", MessageBoxButton.OK, MessageBoxImage.Warning); return; }
@@ -454,7 +454,7 @@ namespace AC10
                 // Sadece kullanıcı dokunduysa ve değiştirdiyse gönder
                 if (is30Changed)
                 {
-                    // 🔥 DÜZELTME 3: Operatör 12.5 yazdığında bunu Noktanın Yeri (Örn: 10) ile çarpıp 125 tamsayısına dönüştürürüz
+                    // Operatör 12.5 yazdığında bunu Noktanın Yeri (Örn: 10) ile çarpıp 125 tamsayısına dönüştürürüz
                     double girilenDeger = ParseDoubleSafe(txtTargetDose.Text);
                     ushort v30 = (ushort)(Math.Round(girilenDeger * Math.Pow(10, currentDecimalPoint)));
 
@@ -491,7 +491,7 @@ namespace AC10
             catch { }
         }
 
-        // 🔥 BUNKER CHECKBOX KONTROLÜ: PASİF OLUNCA HER ŞEYİ (YAZILAR DAHİL) SOLUKLAŞTIR
+        //  PASİF OLUNCA HER ŞEYİ (YAZILAR DAHİL) SOLUKLAŞTIR
         private void chkBunkerEnabled_CheckedChanged(object sender, RoutedEventArgs e)
         {
             if (pnlBunker != null)
