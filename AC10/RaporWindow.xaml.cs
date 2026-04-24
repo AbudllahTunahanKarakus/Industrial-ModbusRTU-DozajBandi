@@ -39,7 +39,7 @@ namespace WPF
             lblDurum.Text = $"Listelenen Kayıt Sayısı: {dt.Rows.Count}";
         }
 
-        // --- 🔥 DİNAMİK SATIR RENKLENDİRME (Artık XAML'a bağlı olduğu için çalışacak) ---
+        // --- DİNAMİK SATIR RENKLENDİRME  ---
         private void dgvAlarmlar_LoadingRow(object sender, DataGridRowEventArgs e)
         {
             if (e.Row.Item is DataRowView rowView)
