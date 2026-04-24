@@ -75,7 +75,7 @@ namespace ModbusLibrary
             }
         }
 
-        // 🔥 YENİ: "Ateşle ve Unut" mantığı ile arayüzü dondurmayan Olay Kaydı
+        //  arayüzü dondurmayan Olay Kaydı
         public void OlayKaydet(string mesaj, string tip, string oturum = "")
         {
             Task.Run(() =>
@@ -103,7 +103,7 @@ namespace ModbusLibrary
             
         }
 
-        // 🔥 YENİ: "Ateşle ve Unut" mantığı ile arayüzü dondurmayan Periyodik Veri Kaydı
+        //  arayüzü dondurmayan Periyodik Veri Kaydı
         public void VeriKaydet(double debi, double agirlik, double hiz, double t1, double t2, double bunker, int k31, int k32, int g14, int c15, int s16, string oturum = "")
         {
             Task.Run(() =>
@@ -169,7 +169,7 @@ namespace ModbusLibrary
             });
         }
 
-        // Tablo getirme işlemleri veriyi UI'a yüklediği için Task.Run İÇİNE ALINMADI. (Doğru olan da budur).
+        // Tablo getirme işlemleri veriyi UI'a yüklediği için Task.Run İÇİNE ALINMADI.
         public DataTable GetirOlayLoglari(string oturumId = "")
         {
             DataTable dt = new DataTable();
@@ -366,7 +366,7 @@ namespace ModbusLibrary
 //            catch { }
 //        }
 
-//        // 🔥 YENİ: SQL'DEN OLAY VE ALARMLARI ÇEKME METODU
+//       
 //        public DataTable GetirOlayLoglari(string oturumId = "")
 //        {
 //            DataTable dt = new DataTable();
